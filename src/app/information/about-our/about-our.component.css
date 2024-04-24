@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.divsito {
+  padding: 110px 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .divsito {
+    padding: 0;
+  }
+}
