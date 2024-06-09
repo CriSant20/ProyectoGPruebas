@@ -10,6 +10,7 @@ class Connection {
             // Config DBConnection only once
             Connection.instance = new sequelize_1.Sequelize('test', 'root', '', {
                 host: 'localhost',
+                port: 3415,
                 dialect: 'mysql'
             });
         }
