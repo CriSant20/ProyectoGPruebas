@@ -21,7 +21,7 @@ const cors_1 = __importDefault(require("cors"));
 const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const projects_routes_1 = __importDefault(require("../routes/projects.routes"));
 // creation of tables
-const { User, Projects } = require("./tblAssociation.models");
+const { User, Projects, Clubs, Students } = require("./tblAssociation.models");
 
 class Server {
     constructor() {
@@ -42,6 +42,7 @@ class Server {
     routes() {
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/projects', projects_routes_1.default);
+
     }
     /*@middlewares: check http request from server,
     if body is in json convert data to js object*/
@@ -57,6 +58,8 @@ class Server {
                 // These lines of code the first time create my tables
                 yield User.sync();
                 yield Projects.sync();
+                yield Students.sync();
+                yield Clubs.sync();
             }
             catch (error) {
                 console.log('unable to connect to the database:', error);
