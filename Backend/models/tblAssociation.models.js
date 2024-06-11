@@ -1,6 +1,7 @@
 "use strict";
+
+exports.Projects = exports.Students = exports.Clubs = exports.User = exports.Members = void 0;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Projects = exports.Students = exports.Clubs = exports.User = void 0;
 
 const user_models_1 = require("./user.models");
 Object.defineProperty(exports, "User", { enumerable: true, get: function () { return user_models_1.User; } });
@@ -14,6 +15,8 @@ Object.defineProperty(exports, "Students", { enumerable: true, get: function () 
 const clubs_models_1 = require("./clubs.models");
 Object.defineProperty(exports, "Clubs", { enumerable: true, get: function () { return clubs_models_1.Clubs; } });
 
+const members_models_1 = require("./members.models");
+Object.defineProperty(exports, "Members", { enumerable: true, get: function () { return members_models_1.Members; }});
 //@Associations
 // Es difícil de entender pero
 // Producto

@@ -16,7 +16,7 @@ const manage_error_1 = require("../error/manage.error");
 
 const getProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const projectsList = yield project_models_1.Project.findAll();
+        const projectsList = yield project_models_1.Projects.findAll();
         res.json({
             projectsList
         });

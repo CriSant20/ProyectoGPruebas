@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 
-
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -20,6 +19,11 @@ const cors_1 = __importDefault(require("cors"));
 // routes
 const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const projects_routes_1 = __importDefault(require("../routes/projects.routes"));
+const students_routes_1 = __importDefault(require("../routes/students.routes")); // Importa correctamente
+const clubs_routes_1 = __importDefault(require("../routes/clubs.routes"));
+const members_routes_1 = __importDefault(require("../routes/members.routes"));
+
+const { Members } = require("./members.models");
 // creation of tables
 const { User, Projects, Clubs, Students } = require("./tblAssociation.models");
 
@@ -42,7 +46,9 @@ class Server {
     routes() {
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/projects', projects_routes_1.default);
-
+        this.app.use('/api/students', students_routes_1.default); 
+        this.app.use('/api/clubs', clubs_routes_1.default);
+        this.app.use('/api/members', members_routes_1.default);
     }
     /*@middlewares: check http request from server,
     if body is in json convert data to js object*/
@@ -60,6 +66,7 @@ class Server {
                 yield Projects.sync();
                 yield Students.sync();
                 yield Clubs.sync();
+                yield Members.sync();
             }
             catch (error) {
                 console.log('unable to connect to the database:', error);
