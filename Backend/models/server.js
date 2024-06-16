@@ -19,8 +19,13 @@ const cors_1 = __importDefault(require("cors"));
 // routes
 const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const projects_routes_1 = __importDefault(require("../routes/projects.routes"));
+const students_routes_1 = __importDefault(require("../routes/students.routes")); // Importa correctamente
+const clubs_routes_1 = __importDefault(require("../routes/clubs.routes"));
+const members_routes_1 = __importDefault(require("../routes/members.routes"));
+
+const { Members } = require("./members.models");
 // creation of tables
-const { User, Projects } = require("./tblAssociation.models");
+const { User, Projects, Clubs, Students } = require("./tblAssociation.models");
 
 class Server {
     constructor() {
@@ -42,6 +47,9 @@ class Server {
     routes() {
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/projects', projects_routes_1.default);
+        this.app.use('/api/students', students_routes_1.default); 
+        this.app.use('/api/clubs', clubs_routes_1.default);
+        this.app.use('/api/members', members_routes_1.default);
     }
 
     /*@middlewares: check http request from server,
@@ -59,8 +67,12 @@ class Server {
                 // These lines of code the first time create my tables
                 yield User.sync();
                 yield Projects.sync();
-            } catch (error) {
-                console.log('Unable to connect to the database:', error);
+                yield Students.sync();
+                yield Clubs.sync();
+                yield Members.sync();
+            }
+            catch (error) {
+                console.log('unable to connect to the database:', error);
             }
         });
     }
