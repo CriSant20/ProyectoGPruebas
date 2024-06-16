@@ -32,7 +32,7 @@ exports.getProjects = getProjects;
 const getProjectById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const idProject = req.params.id;
-        const findProject = yield project_models_1.Project.findOne({ where: { ID_Proyecto: idProject } });
+        const findProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: idProject } });
         if (!findProject) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.PROJ_NOT_FOUND
@@ -51,7 +51,7 @@ exports.getProjectById = getProjectById;
 
 const newProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { ID_Proyecto, Nombre, Descripcion, Fecha_Inicio, Fecha_Fin, ID_Responsable } = req.body;
-    const existProject = yield project_models_1.Project.findOne({ where: { ID_Proyecto: ID_Proyecto } });
+    const existProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: ID_Proyecto } });
     if (existProject) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.PROJ_EXIST
@@ -82,7 +82,7 @@ exports.newProject = newProject;
 const updateProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idProject = req.params.id;
     const { Nombre, Descripcion, Fecha_Inicio, Fecha_Fin, ID_Responsable } = req.body;
-    const existProject = yield project_models_1.Project.findOne({ where: { ID_Proyecto: idProject } });
+    const existProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: idProject } });
     if (!existProject) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.PROJ_NOT_FOUND
@@ -111,7 +111,7 @@ exports.updateProject = updateProject;
 
 const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idProject = req.params.id;
-    const existProject = yield project_models_1.Project.findOne({ where: { ID_Proyecto: idProject } });
+    const existProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: idProject } });
     if (!existProject) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.PROJ_NOT_FOUND

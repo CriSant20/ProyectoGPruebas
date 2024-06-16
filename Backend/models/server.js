@@ -31,18 +31,19 @@ class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '3001';
-        this.listen();
         this.middlewares();
         this.routes();
         this.dbConnect();
     }
+
     //@app.listen(): initialize the web server on the specified port 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Application is running in port ${this.port}`);
+            console.log(`Application is running on port ${this.port}`);
         });
     }
-    //@routes: configurate routes
+
+    //@routes: configure routes
     routes() {
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/projects', projects_routes_1.default);
@@ -50,12 +51,14 @@ class Server {
         this.app.use('/api/clubs', clubs_routes_1.default);
         this.app.use('/api/members', members_routes_1.default);
     }
+
     /*@middlewares: check http request from server,
     if body is in json convert data to js object*/
     middlewares() {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)());
     }
+
     /*@dbConnect: Asynchronous function that creates the database based on
     sequel rules*/
     dbConnect() {
