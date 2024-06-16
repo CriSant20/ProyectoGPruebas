@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 
-
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -27,28 +26,31 @@ class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.port = process.env.PORT || '3001';
-        this.listen();
         this.middlewares();
         this.routes();
         this.dbConnect();
     }
+
     //@app.listen(): initialize the web server on the specified port 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Application is running in port ${this.port}`);
+            console.log(`Application is running on port ${this.port}`);
         });
     }
-    //@routes: configurate routes
+
+    //@routes: configure routes
     routes() {
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/projects', projects_routes_1.default);
     }
+
     /*@middlewares: check http request from server,
     if body is in json convert data to js object*/
     middlewares() {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)());
     }
+
     /*@dbConnect: Asynchronous function that creates the database based on
     sequel rules*/
     dbConnect() {
@@ -57,9 +59,8 @@ class Server {
                 // These lines of code the first time create my tables
                 yield User.sync();
                 yield Projects.sync();
-            }
-            catch (error) {
-                console.log('unable to connect to the database:', error);
+            } catch (error) {
+                console.log('Unable to connect to the database:', error);
             }
         });
     }
