@@ -3,43 +3,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Members = void 0;
+exports.Tareas = void 0;
 const connection_db_1 = __importDefault(require("../db/connection.db"));
 const sequelize_1 = require("sequelize");
-
-exports.Members = connection_db_1.default.define('miembros', {
-    id_Miembro: {
+exports.Tareas = connection_db_1.default.define('tareas', {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     Nombre: {
-        type: sequelize_1.DataTypes.STRING(40),
+        type: sequelize_1.DataTypes.STRING(50),
         allowNull: false
     },
-    Apellido: {
-        type: sequelize_1.DataTypes.STRING(40),
-        allowNull: false
-    },
-    Edad: {
+    id_estudiante: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
     },
-    Semestre: {
+    id_club: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
     },
-    Carrera: {
-        type: sequelize_1.DataTypes.STRING(60),
-        allowNull: false
+    descripcionTarea:{
+        type: sequelize_1.DataTypes.STRING(50)
     },
-    Rol: {
-        type: sequelize_1.DataTypes.STRING(30),
-        allowNull: false
-    },
-    IdClubs: {
-        type: sequelize_1.DataTypes.INTEGER
+    Estado:{
+        type: sequelize_1.DataTypes.BOOLEAN(true)
     }
 });
-
-
