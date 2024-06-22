@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteClub = exports.updateClub = exports.newClub = exports.getClubById = exports.getClubs = void 0;
-const clubs_models_1 = require("../models/clubs.models");
+exports.deletePEventos = exports.updatePEventos = exports.newDEventos = exports.getPEventoById = exports.getPEventos = void 0;
+const Peventos_models_1 = require("../models/DetallePagoEventos.models");
 const manage_error_1 = require("../error/manage.error");
 
-const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getPEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const clubsList = yield clubs_models_1.Clubs.findAll();
+        const PeventosList = yield Peventos_models_1.PEvents.findAll();
         res.json({
-            clubsList
+            PeventosList
         });
     }
     catch (error) {
@@ -27,18 +27,18 @@ const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.getClubs = getClubs;
+exports.getPEventos = getPEventos;
 
-const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getPEventoById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const idClub = req.params.id;
-        const club = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-        if (!club) {
+        const idPEvento = req.params.id;
+        const Pevento = yield Peventos_models_1.PEvents.findOne({ where: { id: idPEvento } });
+        if (!Pevento) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
             });
         }
-        res.json(club);
+        res.json(Pevento);
     }
     catch (error) {
         return res.status(500).json({
@@ -47,24 +47,23 @@ const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-exports.getClubById = getClubById;
+exports.getPEventoById = getPEventoById;
 
-const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { NombreClub: NombreClub } });
-    if (existClub) {
+const newPEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, id_usuarios } = req.body;
+    const existPEventos = yield Peventos_models_1.PEvents.findOne({ where: { id: id } });
+    if (existPEventos) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.CLUB_EXIST
         });
     }
     try {
-        yield clubs_models_1.Clubs.create({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
+        yield Peventos_models_1.DEvents.create({
+            id: id,
+            id_usuarios: id_usuarios
         });
         res.json({
-            msg: `El club ${NombreClub} se creó satisfactoriamente`
+            msg: `El Detalle del pago de eventos ${id} se creó satisfactoriamente`
         });
     }
     catch (error) {
@@ -74,25 +73,24 @@ const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.newClub = newClub;
+exports.newPEventos = newPEventos;
 
-const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const updatePEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idPEvento = req.params.id;
+    const { id, id_usuarios } = req.body;
+    const existPEventos = yield Peventos_models_1.PEvents.findOne({ where: { id: idPEvento } });
+    if (!existPEventos) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.update({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
-        }, { where: { id: idClub } });
+        yield Peventos_models_1.PEvents.update({
+            id: id,
+            id_usuarios: id_usuarios
+        }, { where: { id: idPEvento } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido editado satisfactoriamente`
+            msg: `El detalle del evento ${existPEventos.id} ha sido editado satisfactoriamente`
         });
     }
     catch (error) {
@@ -102,20 +100,20 @@ const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.updateClub = updateClub;
+exports.updatePEventos = updatePEventos;
 
-const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const deletePEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idPEventos = req.params.id;
+    const existPEventos = yield Peventos_models_1.PEvents.findOne({ where: { id: idPEventos } });
+    if (!existPEventos) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.destroy({ where: { id: idClub } });
+        yield Peventos_models_1.PEvents.destroy({ where: { id: idDEventos } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido removido satisfactoriamente`
+            msg: `El detalle del evento ${existPEventos.id} ha sido removido satisfactoriamente`
         });
     }
     catch (error) {
@@ -125,4 +123,4 @@ const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.deleteClub = deleteClub;
+exports.deletePEventos = deletePEventos;

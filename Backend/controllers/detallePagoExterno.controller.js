@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteClub = exports.updateClub = exports.newClub = exports.getClubById = exports.getClubs = void 0;
-const clubs_models_1 = require("../models/clubs.models");
+exports.deletePExterno = exports.updatePExterno = exports.newPExterno = exports.getPExternoById = exports.getPExternos = void 0;
+const Pexternos_models_1 = require("../models/DetallePagoExterno.models");
 const manage_error_1 = require("../error/manage.error");
 
-const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getPExternos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const clubsList = yield clubs_models_1.Clubs.findAll();
+        const PexternosList = yield Pexternos_models_1.DetallePagoExterno.findAll();
         res.json({
-            clubsList
+            PexternosList
         });
     }
     catch (error) {
@@ -27,18 +27,18 @@ const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.getClubs = getClubs;
+exports.getPExternos = getPExternos;
 
-const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getPExternoById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const idClub = req.params.id;
-        const club = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-        if (!club) {
+        const idPExterno = req.params.id;
+        const Pexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: idPExterno } });
+        if (!Pexterno) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
             });
         }
-        res.json(club);
+        res.json(Pexterno);
     }
     catch (error) {
         return res.status(500).json({
@@ -47,24 +47,23 @@ const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-exports.getClubById = getClubById;
+exports.getPExternoById = getPExternoById;
 
-const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { NombreClub: NombreClub } });
-    if (existClub) {
+const newPExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, detalle } = req.body;
+    const existPexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: id } });
+    if (existPexterno) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.CLUB_EXIST
         });
     }
     try {
-        yield clubs_models_1.Clubs.create({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
+        yield Pexternos_models_1.DetallePagoExterno.create({
+            id: id,
+            detalle: detalle
         });
         res.json({
-            msg: `El club ${NombreClub} se creó satisfactoriamente`
+            msg: `El Detalle del pago externos ${id} se creó satisfactoriamente`
         });
     }
     catch (error) {
@@ -74,25 +73,24 @@ const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.newClub = newClub;
+exports.newPExterno = newPExterno;
 
-const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const updatePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idPExterno = req.params.id;
+    const { id, detalle } = req.body;
+    const existPexterno = yield Pexternos_models_1.PEvents.findOne({ where: { id: idPExterno } });
+    if (!existPexterno) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.update({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
-        }, { where: { id: idClub } });
+        yield Pexternos_models_1.PEvents.update({
+            id: id,
+            detalle: detalle
+        }, { where: { id: idPExterno } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido editado satisfactoriamente`
+            msg: `El detalle del pago externo ${existPexterno.id} ha sido editado satisfactoriamente`
         });
     }
     catch (error) {
@@ -102,20 +100,20 @@ const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.updateClub = updateClub;
+exports.updatePExterno = updatePExterno;
 
-const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const deletePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idPExterno = req.params.id;
+    const existPexterno = yield Pexternos_models_1.PEvents.findOne({ where: { id: idPExterno } });
+    if (!existPexterno) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.destroy({ where: { id: idClub } });
+        yield Pexternos_models_1.PEvents.destroy({ where: { id: idPExterno } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido removido satisfactoriamente`
+            msg: `El detalle del pago ${existPexterno.id} ha sido removido satisfactoriamente`
         });
     }
     catch (error) {
@@ -125,4 +123,4 @@ const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.deleteClub = deleteClub;
+exports.deletePExterno = deletePExterno;

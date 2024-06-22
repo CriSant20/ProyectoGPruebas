@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteClub = exports.updateClub = exports.newClub = exports.getClubById = exports.getClubs = void 0;
-const clubs_models_1 = require("../models/clubs.models");
+exports.deleteDClub = exports.updateDClub = exports.newDClub = exports.getDClubById = exports.getDClubs = void 0;
+const Dclubs_models_1 = require("../models/detalleClubs.models");
 const manage_error_1 = require("../error/manage.error");
 
-const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getDClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const clubsList = yield clubs_models_1.Clubs.findAll();
+        const DclubsList = yield Dclubs_models_1.DClubs.findAll();
         res.json({
-            clubsList
+            DclubsList
         });
     }
     catch (error) {
@@ -27,18 +27,18 @@ const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.getClubs = getClubs;
+exports.getDClubs = getDClubs;
 
-const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getDClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const idClub = req.params.id;
-        const club = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-        if (!club) {
+        const idDClub = req.params.id;
+        const Dclub = yield Dclubs_models_1.DClubs.findOne({ where: { id: idDClub } });
+        if (!Dclub) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
             });
         }
-        res.json(club);
+        res.json(Dclub);
     }
     catch (error) {
         return res.status(500).json({
@@ -47,24 +47,24 @@ const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-exports.getClubById = getClubById;
+exports.getDClubById = getDClubById;
 
-const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { NombreClub: NombreClub } });
-    if (existClub) {
+const newDClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, id_estudiantes, id_cargo } = req.body;
+    const existDClub = yield Dclubs_models_1.DClubs.findOne({ where: { id: id } });
+    if (existDClub) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.CLUB_EXIST
         });
     }
     try {
-        yield clubs_models_1.Clubs.create({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
+        yield Dclubs_models_1.DClubs.create({
+            id: id,
+            id_estudiantes: id_estudiantes,
+            id_cargo: id_cargo
         });
         res.json({
-            msg: `El club ${NombreClub} se creó satisfactoriamente`
+            msg: `El Detalle de club ${id} se creó satisfactoriamente`
         });
     }
     catch (error) {
@@ -74,25 +74,25 @@ const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.newClub = newClub;
+exports.newDClub = newDClub;
 
-const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const updateDClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idDClub = req.params.id;
+    const { id, id_estudiantes, id_cargo } = req.body;
+    const existDClub = yield Dclubs_models_1.DClubs.findOne({ where: { id: idDClub } });
+    if (!existDClub) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.update({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
-        }, { where: { id: idClub } });
+        yield Dclubs_models_1.DClubs.update({
+            id: id,
+            id_estudiantes: id_estudiantes,
+            id_cargo: id_cargo
+        }, { where: { id: idDClub } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido editado satisfactoriamente`
+            msg: `El detalle de club ${existDClub.id} ha sido editado satisfactoriamente`
         });
     }
     catch (error) {
@@ -102,20 +102,20 @@ const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.updateClub = updateClub;
+exports.updateDClub = updateDClub;
 
-const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const deleteDClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idDClub = req.params.id;
+    const existDClub = yield Dclubs_models_1.DClubs.findOne({ where: { id: idDClub } });
+    if (!existDClub) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.destroy({ where: { id: idClub } });
+        yield Dclubs_models_1.DClubs.destroy({ where: { id: idDClub } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido removido satisfactoriamente`
+            msg: `El detalle de club ${existDClub.id} ha sido removido satisfactoriamente`
         });
     }
     catch (error) {
@@ -125,4 +125,4 @@ const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.deleteClub = deleteClub;
+exports.deleteDClub = deleteDClub;

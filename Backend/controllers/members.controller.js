@@ -49,7 +49,7 @@ exports.getMemberById = getMemberById;
 
 // Crear un nuevo miembro del club
 const newMember = async (req, res) => {
-    const { id_Miembro, Nombre, Apellido, Edad, Semestre, Carrera, Rol } = req.body;
+    const { id_Miembro, Nombre, Apellido, Edad, Semestre, Carrera, Rol, IdClubs } = req.body;
     const existMember = await Members.findOne({ where: { Nombre: Nombre, Apellido: Apellido } });
     if (existMember) {
         return res.status(409).json({
@@ -64,7 +64,8 @@ const newMember = async (req, res) => {
             Edad: Edad,
             Semestre: Semestre,
             Carrera: Carrera,
-            Rol: Rol
+            Rol: Rol,
+            IdClubs: IdClubs
         });
         res.json({
             msg: `El miembro ${Nombre} ${Apellido} se creó satisfactoriamente`
@@ -81,7 +82,7 @@ exports.newMember = newMember;
 // Actualizar un miembro del club
 const updateMember = async (req, res) => {
     const memberId = req.params.id;
-    const { Nombre, Apellido, Edad, Semestre, Carrera, Rol } = req.body;
+    const { Nombre, Apellido, Edad, Semestre, Carrera, Rol, IdClubs } = req.body;
     const existMember = await Members.findByPk(memberId);
     if (!existMember) {
         return res.status(404).json({
@@ -95,7 +96,8 @@ const updateMember = async (req, res) => {
             Edad: Edad,
             Semestre: Semestre,
             Carrera: Carrera,
-            Rol: Rol
+            Rol: Rol,
+            IdClubs: IdClubs
         });
         res.json({
             msg: `El miembro ${existMember.Nombre} ${existMember.Apellido} ha sido editado satisfactoriamente`

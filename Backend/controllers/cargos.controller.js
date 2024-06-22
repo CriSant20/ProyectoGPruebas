@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteClub = exports.updateClub = exports.newClub = exports.getClubById = exports.getClubs = void 0;
-const clubs_models_1 = require("../models/clubs.models");
+exports.deleteCargos = exports.updateCargo = exports.newCargos = exports.getCargoById = exports.getCargos = void 0;
+const cargo_models_1 = require("../models/cargos.models");
 const manage_error_1 = require("../error/manage.error");
 
-const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getCargos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const clubsList = yield clubs_models_1.Clubs.findAll();
+        const cargosList = yield cargo_models_1.Cargos.findAll();
         res.json({
-            clubsList
+            cargosList
         });
     }
     catch (error) {
@@ -27,18 +27,18 @@ const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.getClubs = getClubs;
+exports.getCargos = getCargos;
 
-const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getCargoById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const idClub = req.params.id;
-        const club = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-        if (!club) {
+        const idCargo = req.params.id;
+        const cargo = yield cargo_models_1.Cargos.findOne({ where: { id: idCargo } });
+        if (!cargo) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
             });
         }
-        res.json(club);
+        res.json(cargo);
     }
     catch (error) {
         return res.status(500).json({
@@ -47,24 +47,24 @@ const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-exports.getClubById = getClubById;
+exports.getCargoById = getCargoById;
 
-const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { NombreClub: NombreClub } });
-    if (existClub) {
+const newCargos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { Nombre, seccionCargo, Estado } = req.body;
+    const existCargo = yield cargo_models_1.Cargos.findOne({ where: { Nombre: Nombre } });
+    if (existCargo) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.CLUB_EXIST
         });
     }
     try {
-        yield clubs_models_1.Clubs.create({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
+        yield cargo_models_1.Cargos.create({
+            Nombre: Nombre,
+            seccionCargo: seccionCargo,
+            Estado:Estado
         });
         res.json({
-            msg: `El club ${NombreClub} se creó satisfactoriamente`
+            msg: `El cargo ${Nombre} se creó satisfactoriamente`
         });
     }
     catch (error) {
@@ -74,25 +74,25 @@ const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.newClub = newClub;
+exports.newCargos = newCargos;
 
-const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const updateCargo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const { Nombre, seccionCargo, Estado } = req.body;
+    const existCargo = yield cargo_models_1.Cargos.findOne({ where: { id: id } });
+    if (!existCargo) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.update({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
-        }, { where: { id: idClub } });
+        yield cargo_models_1.Cargos.update({
+            Nombre: Nombre,
+            seccionCargo: seccionCargo,
+            Estado:Estado
+        }, { where: { id: id } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido editado satisfactoriamente`
+            msg: `El cargo ${existCargo.Nombre} ha sido editado satisfactoriamente`
         });
     }
     catch (error) {
@@ -102,20 +102,20 @@ const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.updateClub = updateClub;
+exports.updateCargo = updateCargo;
 
-const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const deleteCargos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const existCargo = yield cargo_models_1.Clubs.findOne({ where: { id: id } });
+    if (!existCargo) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.destroy({ where: { id: idClub } });
+        yield cargo_models_1.Clubs.destroy({ where: { id: id } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido removido satisfactoriamente`
+            msg: `El cargo ${existCargo.Nombre} ha sido removido satisfactoriamente`
         });
     }
     catch (error) {
@@ -125,4 +125,4 @@ const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.deleteClub = deleteClub;
+exports.deleteCargos = deleteCargos;

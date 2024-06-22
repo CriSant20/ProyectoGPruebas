@@ -32,7 +32,7 @@ exports.getStudents = getStudents;
 const getStudentById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const idStudent = req.params.id;
-        const findStudent = yield students_models_1.Students.findOne({ where: { ID_Estudiante: idStudent } });
+        const findStudent = yield students_models_1.Students.findOne({ where: { id: idStudent } });
         if (!findStudent) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.STUDENT_NOT_FOUND
@@ -50,7 +50,7 @@ const getStudentById = (req, res) => __awaiter(void 0, void 0, void 0, function*
 exports.getStudentById = getStudentById;
 
 const newStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { Nombre, Apellido, Carrera, Semestre, Club, Rol } = req.body;
+    const { id, Nombre, Apellido, Edad, Carrera, Semestre, id_Cargo, Estado, Cedula, Correo, Contrasena } = req.body;
     const existStudent = yield students_models_1.Students.findOne({ where: { Nombre: Nombre, Apellido: Apellido } });
     if (existStudent) {
         return res.status(409).json({
@@ -59,12 +59,16 @@ const newStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         yield students_models_1.Students.create({
+            id: id,
             Nombre: Nombre,
             Apellido: Apellido,
+            Edad: Edad,
             Carrera: Carrera,
             Semestre: Semestre,
-            Club: Club,
-            Rol: Rol
+            id_Cargo: id_Cargo,
+            Cedula: Cedula,
+            Correo: Correo,
+            Contrasena, Contrasena
         });
         res.json({
             msg: `El estudiante ${Nombre} ${Apellido} se creó satisfactoriamente`
@@ -81,8 +85,8 @@ exports.newStudent = newStudent;
 
 const updateStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idStudent = req.params.id;
-    const { Nombre, Apellido, Carrera, Semestre, Club, Rol } = req.body;
-    const existStudent = yield students_models_1.Students.findOne({ where: { ID_Estudiante: idStudent } });
+    const { id, Nombre, Apellido, Edad, Carrera, Semestre, id_Cargo, Estado, Cedula, Correo, Contrasena } = req.body;
+    const existStudent = yield students_models_1.Students.findOne({ where: { id: idStudent } });
     if (!existStudent) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.STUDENT_NOT_FOUND
@@ -90,13 +94,17 @@ const updateStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     try {
         yield students_models_1.Students.update({
+            id: id,
             Nombre: Nombre,
             Apellido: Apellido,
+            Edad: Edad,
             Carrera: Carrera,
             Semestre: Semestre,
-            Club: Club,
-            Rol: Rol
-        }, { where: { ID_Estudiante: idStudent } });
+            id_Cargo: id_Cargo,
+            Cedula: Cedula,
+            Correo: Correo,
+            Contrasena, Contrasena
+        }, { where: { id: idStudent } });
         res.json({
             msg: `El estudiante ${existStudent.Nombre} ${existStudent.Apellido} ha sido editado satisfactoriamente`
         });
@@ -112,14 +120,14 @@ exports.updateStudent = updateStudent;
 
 const deleteStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idStudent = req.params.id;
-    const existStudent = yield students_models_1.Students.findOne({ where: { ID_Estudiante: idStudent } });
+    const existStudent = yield students_models_1.Students.findOne({ where: { id: idStudent } });
     if (!existStudent) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.STUDENT_NOT_FOUND
         });
     }
     try {
-        yield students_models_1.Students.destroy({ where: { ID_Estudiante: idStudent } });
+        yield students_models_1.Students.destroy({ where: { id: idStudent } });
         res.json({
             msg: `El estudiante ${existStudent.Nombre} ${existStudent.Apellido} ha sido removido satisfactoriamente`
         });

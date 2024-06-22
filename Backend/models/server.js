@@ -22,6 +22,15 @@ const projects_routes_1 = __importDefault(require("../routes/projects.routes"));
 const students_routes_1 = __importDefault(require("../routes/students.routes")); // Importa correctamente
 const clubs_routes_1 = __importDefault(require("../routes/clubs.routes"));
 const members_routes_1 = __importDefault(require("../routes/members.routes"));
+const detalleClubs_routes_1 = __importDefault(require("../routes/detalleClubs.routes"));
+const detalleEventos_routes_1 = __importDefault(require("../routes/detalleEventos.routes"));
+const detallePagoEvento_routes_1 = __importDefault(require("../routes/detallePagoEventos.routes"));
+const detallePagoExterno_routes_1 = __importDefault(require("../routes/detallePagoExternos.routes"));
+const detalleProjectos_routes_1 = __importDefault(require("../routes/detalleProjectos.routes"));
+const eventos_routes_1 = __importDefault(require("../routes/events.routes"));
+const pagosEventos_routes_1 = __importDefault(require("../routes/pagosEventos.routes"));
+const pagosExternos_routes_1 = __importDefault(require("../routes/pagosExternos.routes"));
+const tareas_routes_1 = __importDefault(require("../routes/tareas.routes"));
 
 // creation of tables
 const { User, Projects, Clubs, Students, Members, Cargos, DetalleClubs, DetalleEventos, DetallePagoEventos,DetallePagoExterno, DetalleProyectos, Eventos, PagosEventos, PagosExternos, Tareas} = require("./tblAssociation.models");
@@ -47,6 +56,16 @@ class Server {
         this.app.use('/api/students', students_routes_1.default);
         this.app.use('/api/clubs', clubs_routes_1.default);
         this.app.use('/api/members', members_routes_1.default);
+        this.app.use('/api/detalleClubs', detalleClubs_routes_1.default);
+        this.app.use('/api/detalleEventos', detalleEventos_routes_1.default);
+        this.app.use('/api/detallePagoEventos', detallePagoEvento_routes_1.default);
+        this.app.use('/api/detallePagoExternos', detallePagoExterno_routes_1.default);
+        this.app.use('/api/detalleProjectos', detalleProjectos_routes_1.default);
+        this.app.use('/api/events', eventos_routes_1.default);
+        this.app.use('/api/PagoEventos', pagosEventos_routes_1.default);
+        this.app.use('/api/PagoEventos', pagosExternos_routes_1.default);
+        this.app.use('/api/tareas', tareas_routes_1.default);
+
     }
     /*@middlewares: check http request from server,
     if body is in json convert data to js object*/

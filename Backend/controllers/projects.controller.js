@@ -32,7 +32,7 @@ exports.getProjects = getProjects;
 const getProjectById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const idProject = req.params.id;
-        const findProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: idProject } });
+        const findProject = yield project_models_1.Projects.findOne({ where: { id: idProject } });
         if (!findProject) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.PROJ_NOT_FOUND
@@ -50,8 +50,8 @@ const getProjectById = (req, res) => __awaiter(void 0, void 0, void 0, function*
 exports.getProjectById = getProjectById;
 
 const newProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { ID_Proyecto, Nombre, Descripcion, Fecha_Inicio, Fecha_Fin, ID_Responsable } = req.body;
-    const existProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: ID_Proyecto } });
+    const { id, Nombre, Encargado, id_detalle_proyectos } = req.body;
+    const existProject = yield project_models_1.Projects.findOne({ where: { id: id } });
     if (existProject) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.PROJ_EXIST
@@ -59,12 +59,10 @@ const newProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         yield project_models_1.Project.create({
-            ID_Proyecto: ID_Proyecto,
+            id: id,
             Nombre: Nombre,
-            Descripcion: Descripcion,
-            Fecha_Inicio: Fecha_Inicio,
-            Fecha_Fin: Fecha_Fin,
-            ID_Responsable: ID_Responsable
+            Encargado: Encargado,
+            id_detalle_proyectos: id_detalle_proyectos
         });
         res.json({
             msg: `El proyecto ${Nombre} se creó satisfactoriamente`
@@ -81,8 +79,8 @@ exports.newProject = newProject;
 
 const updateProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idProject = req.params.id;
-    const { Nombre, Descripcion, Fecha_Inicio, Fecha_Fin, ID_Responsable } = req.body;
-    const existProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: idProject } });
+    const { id, Nombre, Encargado, id_detalle_proyectos } = req.body;
+    const existProject = yield project_models_1.Projects.findOne({ where: { id: idProject } });
     if (!existProject) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.PROJ_NOT_FOUND
@@ -90,11 +88,10 @@ const updateProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     try {
         yield project_models_1.Project.update({
+            id: id,
             Nombre: Nombre,
-            Descripcion: Descripcion,
-            Fecha_Inicio: Fecha_Inicio,
-            Fecha_Fin: Fecha_Fin,
-            ID_Responsable: ID_Responsable
+            Encargado: Encargado,
+            id_detalle_proyectos: id_detalle_proyectos
         }, { where: { ID_Proyecto: idProject } });
         res.json({
             msg: `El proyecto ${existProject.Nombre} ha sido editado satisfactoriamente`
@@ -111,14 +108,14 @@ exports.updateProject = updateProject;
 
 const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idProject = req.params.id;
-    const existProject = yield project_models_1.Projects.findOne({ where: { ID_Proyecto: idProject } });
+    const existProject = yield project_models_1.Projects.findOne({ where: { id: idProject } });
     if (!existProject) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.PROJ_NOT_FOUND
         });
     }
     try {
-        yield project_models_1.Project.destroy({ where: { ID_Proyecto: idProject } });
+        yield project_models_1.Project.destroy({ where: { id: idProject } });
         res.json({
             msg: `El proyecto ${existProject.Nombre} ha sido removido satisfactoriamente`
         });
