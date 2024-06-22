@@ -8,19 +8,30 @@ exports.Clubs = void 0;
 const connection_db_1 = __importDefault(require("../db/connection.db"));
 const sequelize_1 = require("sequelize");
 
+
+
 exports.Clubs = connection_db_1.default.define('clubs', {
-    ID_Club: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     NombreClub: {
-        type: sequelize_1.DataTypes.STRING(30),
+        type: sequelize_1.DataTypes.STRING(50),
         allowNull: false
     },
    
     Encargado: {
-        type: sequelize_1.DataTypes.STRING(30),
+        type: sequelize_1.DataTypes.STRING(50),
         allowNull: false
+    },
+    id_detalle_club: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    },
+    Estado:{
+        type: sequelize_1.DataTypes.BOOLEAN(true)
     }
 });
+
+

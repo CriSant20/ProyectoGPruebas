@@ -1,6 +1,10 @@
 "use strict";
 
-exports.Projects = exports.Students = exports.Clubs = exports.User = exports.Members = void 0;
+const { Clubs } = require('./clubs.models');
+const { Members } = require('./members.models');
+const { User } = require('./user.models'); 
+
+exports.Projects = exports.Students = exports.Clubs = exports.User = exports.Members = exports.Cargos = exports.DClubs = exports.DEvents = exports.DetallePagoEventos = exports.DetallePagoExterno = exports.DProjects = exports.Events = exports.PagosEvents = exports.PagosExternos = exports.Tareas = void 0;
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const user_models_1 = require("./user.models");
@@ -17,6 +21,36 @@ Object.defineProperty(exports, "Clubs", { enumerable: true, get: function () { r
 
 const members_models_1 = require("./members.models");
 Object.defineProperty(exports, "Members", { enumerable: true, get: function () { return members_models_1.Members; }});
+
+const cargos_models_1 = require("./cargos.models");
+Object.defineProperty(exports, "Cargos", { enumerable: true, get: function () { return cargos_models_1.Cargos}});
+
+const dClubs_models_1 = require("./detalleClubs.models");
+Object.defineProperty(exports, "DetalleClubs", { enumerable: true, get: function () { return dClubs_models_1.DClubs}});
+
+const dEventos_models_1 = require("./detalleEventos.models");
+Object.defineProperty(exports, "DetalleEventos", { enumerable: true, get: function () { return dEventos_models_1.DEvents}});
+
+const dPEventos_models_1 = require("./DetallePagoEventos.models");
+Object.defineProperty(exports, "DetallePagoEventos", { enumerable: true, get: function () { return dPEventos_models_1.DetallePagoEventos}});
+
+const dPExterno_models_1 = require("./DetallePagoExterno.models");
+Object.defineProperty(exports, "DetallePagoExterno", { enumerable: true, get: function () { return dPExterno_models_1.DetallePagoExterno}});
+
+const dProjects_models_1 = require("./detalleProjects.models");
+Object.defineProperty(exports, "DetalleProyectos", { enumerable: true, get: function () { return dProjects_models_1.DProjects}});
+
+const events_models_1 = require("./events.models");
+Object.defineProperty(exports, "Eventos", { enumerable: true, get: function () { return events_models_1.Events}});
+
+const pEventos_models_1 = require("./pagosEventos.models");
+Object.defineProperty(exports, "PagosEventos", { enumerable: true, get: function () { return pEventos_models_1.PagosEvents}});
+
+const pExternos_models_1 = require("./PagosExternos.models");
+Object.defineProperty(exports, "PagosExternos", { enumerable: true, get: function () { return pExternos_models_1.PagosExternos}});
+
+const tareas_models_1 = require("./tareas.models");
+Object.defineProperty(exports, "Tareas", { enumerable: true, get: function () { return tareas_models_1.Tareas}});
 //@Associations
 // Es difícil de entender pero
 // Producto
@@ -24,7 +58,7 @@ Object.defineProperty(exports, "Members", { enumerable: true, get: function () {
 // category_models_1.Category.hasMany(product_models_1.Product, { foreignKey: "idCatBelong", onUpdate: 'CASCADE' });
 
 // Asociación entre estudiantes y clubes
-
+// Asociación entre Clubs y Members
 
 // Ejemplo de otras asociaciones
 // Usuario Registro y Salida de productos

@@ -20,9 +20,9 @@ const manage_error_1 = require("../error/manage.error");
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     /*Destructuring req.body(similar to type req.body.userName), in my json i gonna received
     the params that i need ex. dniUser- nameUser*/
-    const { dniUser, nameUser, lastNameUser, userName, passwordUser, userRole } = req.body;
+    const { id, Nombre, Apellido, Edad, Organizacion, id_evento, Equipo, Pagos } = req.body;
     //validate if user exist on the database
-    const user = yield user_models_1.User.findOne({ where: { dniUser: dniUser } });
+    const user = yield user_models_1.User.findOne({ where: { id: id } });
     if (user) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.USER_EXIST
@@ -33,12 +33,14 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //Save data in the database
         yield user_models_1.User.create({
-            dniUser: dniUser,
-            nameUser: nameUser,
-            lastNameUser: lastNameUser,
-            userName: userName,
-            passwordUser: hashedPassword,
-            userRole: userRole
+            id: id,
+            Nombre: Nombre,
+            Apellido: Apellido,
+            Edad: Edad,
+            Organizacion: Organizacion,
+            id_evento: id_evento,
+            Equipo: Equipo,
+            Pagos: Pagos
         });
         res.json({
             msg: `Usuario ${nameUser} ${lastNameUser} ha sido creado satisfactoriamente!`
@@ -57,13 +59,13 @@ exports.newUser = newUser;
 //LoginUser 
 const loginUser = async (req, res) => {
     try {
-        const { userName, passwordUser, userRole } = req.body;
+        const { id, Nombre, Apellido, Edad, Organizacion, id_evento, Equipo, Pagos } = req.body;
 
         // Validar si el usuario existe en la base de datos
-        const userExist = await user_models_1.User.findOne({ where: { userName: userName, userRole: userRole } });
+        const userExist = await user_models_1.User.findOne({ where: { Nombre: Nombre, Organizacion: Organizacion } });
         if (!userExist) {
             return res.status(400).json({
-                msg: `No se encontró un usuario con el nombre: ${userName} y el rol de: ${userRole}`
+                msg: `No se encontró un usuario con el nombre: ${Nombre} y su organizacion es: ${Organizacion}`
             });
         }
 
@@ -109,16 +111,16 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getUsers = getUsers;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idUser = req.params.id;
-    const existUser = yield user_models_1.User.findOne({ where: { dniUser: idUser } });
+    const existUser = yield user_models_1.User.findOne({ where: { id: idUser } });
     if (!existUser) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.USER_EXIST
         });
     }
     try {
-        yield user_models_1.User.destroy({ where: { dniUser: idUser } });
+        yield user_models_1.User.destroy({ where: { id: idUser } });
         res.json({
-            msg: `El usuario ${existUser.nameUser} ${existUser.lastNameUser} ha sido removido satisfactoriamente`
+            msg: `El usuario ${existUser.Nombre} ${existUser.Apellido} ha sido removido satisfactoriamente`
         });
     }
     catch (error) {
@@ -131,8 +133,8 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.deleteUser = deleteUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idUser = req.params.id;
-    const { nameUser, lastNameUser, userName } = req.body;
-    const existUser = yield user_models_1.User.findOne({ where: { dniUser: idUser } });
+    const { id, Nombre, Apellido, Edad, Organizacion, id_evento, Equipo, Pagos } = req.body;
+    const existUser = yield user_models_1.User.findOne({ where: { id: idUser } });
     if (!existUser) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.SUP_NOT_FOUND
@@ -140,12 +142,17 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         yield user_models_1.User.update({
-            nameUser: nameUser,
-            lastNameUser: lastNameUser,
-            userName: userName,
-        }, { where: { dniUser: idUser } });
+            id: id,
+            Nombre: Nombre,
+            Apellido: Apellido,
+            Edad: Edad,
+            Organizacion: Organizacion,
+            id_evento: id_evento,
+            Equipo: Equipo,
+            Pagos: Pagos
+        }, { where: { id: idUser } });
         res.json({
-            msg: `El usuario ${existUser.nameUser} ha sido editado satisfactoriamente`
+            msg: `El usuario ${existUser.Nombre} ha sido editado satisfactoriamente`
         });
     }
     catch (error) {

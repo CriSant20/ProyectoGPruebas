@@ -22,10 +22,18 @@ const projects_routes_1 = __importDefault(require("../routes/projects.routes"));
 const students_routes_1 = __importDefault(require("../routes/students.routes")); // Importa correctamente
 const clubs_routes_1 = __importDefault(require("../routes/clubs.routes"));
 const members_routes_1 = __importDefault(require("../routes/members.routes"));
+const detalleClubs_routes_1 = __importDefault(require("../routes/detalleClubs.routes"));
+const detalleEventos_routes_1 = __importDefault(require("../routes/detalleEventos.routes"));
+const detallePagoEvento_routes_1 = __importDefault(require("../routes/detallePagoEventos.routes"));
+const detallePagoExterno_routes_1 = __importDefault(require("../routes/detallePagoExternos.routes"));
+const detalleProjectos_routes_1 = __importDefault(require("../routes/detalleProjectos.routes"));
+const eventos_routes_1 = __importDefault(require("../routes/events.routes"));
+const pagosEventos_routes_1 = __importDefault(require("../routes/pagosEventos.routes"));
+const pagosExternos_routes_1 = __importDefault(require("../routes/pagosExternos.routes"));
+const tareas_routes_1 = __importDefault(require("../routes/tareas.routes"));
 
-const { Members } = require("./members.models");
 // creation of tables
-const { User, Projects, Clubs, Students } = require("./tblAssociation.models");
+const { User, Projects, Clubs, Students, Members, Cargos, DetalleClubs, DetalleEventos, DetallePagoEventos,DetallePagoExterno, DetalleProyectos, Eventos, PagosEventos, PagosExternos, Tareas} = require("./tblAssociation.models");
 
 class Server {
     constructor() {
@@ -35,30 +43,36 @@ class Server {
         this.routes();
         this.dbConnect();
     }
-
     //@app.listen(): initialize the web server on the specified port 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Application is running on port ${this.port}`);
+            console.log(`Application is running in port ${this.port}`);
         });
     }
-
-    //@routes: configure routes
+    //@routes: configurate routes
     routes() {
         this.app.use('/api/users', user_routes_1.default);
         this.app.use('/api/projects', projects_routes_1.default);
-        this.app.use('/api/students', students_routes_1.default); 
+        this.app.use('/api/students', students_routes_1.default);
         this.app.use('/api/clubs', clubs_routes_1.default);
         this.app.use('/api/members', members_routes_1.default);
-    }
+        this.app.use('/api/detalleClubs', detalleClubs_routes_1.default);
+        this.app.use('/api/detalleEventos', detalleEventos_routes_1.default);
+        this.app.use('/api/detallePagoEventos', detallePagoEvento_routes_1.default);
+        this.app.use('/api/detallePagoExternos', detallePagoExterno_routes_1.default);
+        this.app.use('/api/detalleProjectos', detalleProjectos_routes_1.default);
+        this.app.use('/api/events', eventos_routes_1.default);
+        this.app.use('/api/PagoEventos', pagosEventos_routes_1.default);
+        this.app.use('/api/PagoEventos', pagosExternos_routes_1.default);
+        this.app.use('/api/tareas', tareas_routes_1.default);
 
+    }
     /*@middlewares: check http request from server,
     if body is in json convert data to js object*/
     middlewares() {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)());
     }
-
     /*@dbConnect: Asynchronous function that creates the database based on
     sequel rules*/
     dbConnect() {
@@ -70,6 +84,17 @@ class Server {
                 yield Students.sync();
                 yield Clubs.sync();
                 yield Members.sync();
+                yield Cargos.sync();
+                yield DetalleClubs.sync();
+                yield DetalleEventos.sync();
+                yield DetallePagoEventos.sync();
+                yield DetallePagoExterno.sync();
+                yield DetalleProyectos.sync();
+                yield Eventos.sync();
+                yield PagosEventos.sync();
+                yield PagosExternos.sync();
+                yield Projects.sync();
+                yield Tareas.sync();
             }
             catch (error) {
                 console.log('unable to connect to the database:', error);
