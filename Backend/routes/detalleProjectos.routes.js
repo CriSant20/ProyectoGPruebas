@@ -9,7 +9,7 @@ const validateToken_routes_1 = __importDefault(require("./validateToken.routes")
 const router = (0, express_1.Router)();
 router.get('/', dProjects_controller_1.getDProjects);
 router.post('/', dProjects_controller_1.newPDroject);
-router.get('/:id', validateToken_routes_1.default, dProjects_controller_1.getDProjectById);
-router.put('/:id', validateToken_routes_1.default, dProjects_controller_1.updateDProject);
-router.delete('/:id', validateToken_routes_1.default, dProjects_controller_1.deleteDProject );
+router.get('/:id', dProjects_controller_1.getDProjectById);
+router.put('/:id', dProjects_controller_1.updateDProject);
+router.delete('/:id', dProjects_controller_1.deleteDProject );
 exports.default = router;
