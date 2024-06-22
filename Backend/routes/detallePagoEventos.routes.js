@@ -9,7 +9,7 @@ const validateToken_routes_1 = __importDefault(require("./validateToken.routes")
 const router = (0, express_1.Router)();
 router.get('/', dPeventos_controller_1.getPEventos);
 router.post('/', dPeventos_controller_1.newPEventos);
-router.get('/:id', validateToken_routes_1.default, dPeventos_controller_1.getPEventoById);
-router.put('/:id', validateToken_routes_1.default, dPeventos_controller_1.updatePEventos);
-router.delete('/:id', validateToken_routes_1.default, dPeventos_controller_1.deletePEventos);
+router.get('/:id', dPeventos_controller_1.getPEventoById);
+router.put('/:id', dPeventos_controller_1.updatePEventos);
+router.delete('/:id', dPeventos_controller_1.deletePEventos);
 exports.default = router;

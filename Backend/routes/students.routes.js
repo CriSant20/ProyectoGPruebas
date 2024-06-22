@@ -9,9 +9,9 @@ const validateToken_routes_1 = __importDefault(require("./validateToken.routes")
 const router = (0, express_1.Router)();
 
 router.get('/', students_controller_1.getStudents);
-router.post('/', validateToken_routes_1.default, students_controller_1.newStudent);
-router.get('/:id', validateToken_routes_1.default, students_controller_1.getStudentById);
-router.put('/:id', validateToken_routes_1.default, students_controller_1.updateStudent);
-router.delete('/:id', validateToken_routes_1.default, students_controller_1.deleteStudent);
+router.post('/', students_controller_1.newStudent);
+router.get('/:id', students_controller_1.getStudentById);
+router.put('/:id', students_controller_1.updateStudent);
+router.delete('/:id', students_controller_1.deleteStudent);
 
 exports.default = router;
