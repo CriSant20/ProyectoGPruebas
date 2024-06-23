@@ -19,4 +19,7 @@ var ErrorMessages;
     
     ErrorMessages["DETALLE_PE_NOT_FOUND"] = "Detalle de pago externo no encontrado. . .";
     ErrorMessages["DETALLE_PE_EXISTS"] = "Nuevo detalle de pago ya existente, id repetido. . .";
+    ErrorMessages["DEVENTS_NOT_FOUND"] = "Detalle de evento no encontrado. . .";
+    ErrorMessages["DEVENTS_EXIST"] = "Nuevo detalle de evento ya existente, id repetido. . .";
+    
 })(ErrorMessages || (exports.ErrorMessages = ErrorMessages = {}));
