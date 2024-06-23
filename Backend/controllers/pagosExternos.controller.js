@@ -11,12 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePExterno = exports.updatePExterno = exports.newPExterno = exports.getPExternoById = exports.getPExternos = void 0;
-const Pexternos_models_1 = require("../models/pagosEventos.models");
+const Pexternos_models_1 = require("../models/PagosExternos.models");
 const manage_error_1 = require("../error/manage.error");
 
 const getPExternos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const PexternosList = yield Pexternos_models_1.Pexterno.findAll();
+        const PexternosList = yield Pexternos_models_1.PagosExternos.findAll();
         res.json({
             PexternosList
         });
@@ -32,7 +32,7 @@ exports.getPExternos = getPExternos;
 const getPExternoById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const idPExterno = req.params.id;
-        const Pexterno = yield Pexternos_models_1.Pexterno.findOne({ where: { id: idPExterno } });
+        const Pexterno = yield Pexternos_models_1.PagosExternos.findOne({ where: { id: idPExterno } });
         if (!Pexterno) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
@@ -80,7 +80,7 @@ exports.newPExterno = newPExterno;
 const updatePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPExterno = req.params.id;
     const { id, id_evento, fechaEvento, id_detalle_pago } = req.body;
-    const existPexterno = yield Pexternos_models_1.PEvents.findOne({ where: { id: idPExterno } });
+    const existPexterno = yield Pexternos_models_1.PagosExternos.findOne({ where: { id: idPExterno } });
     if (!existPexterno) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
@@ -108,7 +108,7 @@ exports.updatePExterno = updatePExterno;
 
 const deletePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPExterno = req.params.id;
-    const existPexterno = yield Pexternos_models_1.PEvents.findOne({ where: { id: idPExterno } });
+    const existPexterno = yield Pexternos_models_1.PagosExternos.findOne({ where: { id: idPExterno } });
     if (!existPexterno) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND

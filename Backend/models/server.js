@@ -63,7 +63,7 @@ class Server {
         this.app.use('/api/detalleProjectos', detalleProjectos_routes_1.default);
         this.app.use('/api/events', eventos_routes_1.default);
         this.app.use('/api/PagoEventos', pagosEventos_routes_1.default);
-        this.app.use('/api/PagoEventos', pagosExternos_routes_1.default);
+        this.app.use('/api/PagoExternos', pagosExternos_routes_1.default);
         this.app.use('/api/tareas', tareas_routes_1.default);
 
     }

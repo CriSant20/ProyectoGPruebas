@@ -10,13 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePEventos = exports.updatePEventos = exports.newDEventos = exports.getPEventoById = exports.getPEventos = void 0;
+exports.deletePEventos = exports.updatePEventos = exports.newPEventos = exports.getPEventoById = exports.getPEventos = void 0;
 const Peventos_models_1 = require("../models/DetallePagoEventos.models");
 const manage_error_1 = require("../error/manage.error");
 
 const getPEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const PeventosList = yield Peventos_models_1.PEvents.findAll();
+        const PeventosList = yield Peventos_models_1.DetallePagoEventos.findAll();
         res.json({
             PeventosList
         });
@@ -32,7 +32,7 @@ exports.getPEventos = getPEventos;
 const getPEventoById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const idPEvento = req.params.id;
-        const Pevento = yield Peventos_models_1.PEvents.findOne({ where: { id: idPEvento } });
+        const Pevento = yield Peventos_models_1.DetallePagoEventos.findOne({ where: { id: idPEvento } });
         if (!Pevento) {
             return res.status(404).json({
                 msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
@@ -51,7 +51,7 @@ exports.getPEventoById = getPEventoById;
 
 const newPEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, id_usuarios } = req.body;
-    const existPEventos = yield Peventos_models_1.PEvents.findOne({ where: { id: id } });
+    const existPEventos = yield Peventos_models_1.DetallePagoEventos.findOne({ where: { id: id } });
     if (existPEventos) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.CLUB_EXIST
@@ -78,7 +78,7 @@ exports.newPEventos = newPEventos;
 const updatePEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPEvento = req.params.id;
     const { id, id_usuarios } = req.body;
-    const existPEventos = yield Peventos_models_1.PEvents.findOne({ where: { id: idPEvento } });
+    const existPEventos = yield Peventos_models_1.DetallePagoEventos.findOne({ where: { id: idPEvento } });
     if (!existPEventos) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
@@ -104,7 +104,7 @@ exports.updatePEventos = updatePEventos;
 
 const deletePEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPEventos = req.params.id;
-    const existPEventos = yield Peventos_models_1.PEvents.findOne({ where: { id: idPEventos } });
+    const existPEventos = yield Peventos_models_1.DetallePagoEventos.findOne({ where: { id: idPEventos } });
     if (!existPEventos) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
