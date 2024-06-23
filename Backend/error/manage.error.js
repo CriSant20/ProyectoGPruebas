@@ -15,4 +15,8 @@ var ErrorMessages;
     ErrorMessages["WRONG_PASS"] = "Contrase\u00F1a incorrecta";
     ErrorMessages["WRONG_TOKEN"] = "Token Invalido";
     ErrorMessages["MAX_AMOUNT"] = "No se puede retirar mas productos que la cantidad existente";
+    
+    
+    ErrorMessages["DETALLE_PE_NOT_FOUND"] = "Detalle de pago externo no encontrado. . .";
+    ErrorMessages["DETALLE_PE_EXISTS"] = "Nuevo detalle de pago ya existente, id repetido. . .";
 })(ErrorMessages || (exports.ErrorMessages = ErrorMessages = {}));

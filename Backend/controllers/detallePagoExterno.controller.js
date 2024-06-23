@@ -35,7 +35,7 @@ const getPExternoById = (req, res) => __awaiter(void 0, void 0, void 0, function
         const Pexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: idPExterno } });
         if (!Pexterno) {
             return res.status(404).json({
-                msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
+                msg: manage_error_1.ErrorMessages.DETALLE_PE_NOT_FOUND
             });
         }
         res.json(Pexterno);
@@ -54,7 +54,7 @@ const newPExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const existPexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: id } });
     if (existPexterno) {
         return res.status(409).json({
-            msg: manage_error_1.ErrorMessages.CLUB_EXIST
+            msg: manage_error_1.ErrorMessages.DETALLE_PE_EXISTS
         });
     }
     try {
@@ -82,7 +82,7 @@ const updatePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const existPexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: idPExterno } });
     if (!existPexterno) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.DETALLE_PE_NOT_FOUND
         });
     }
     try {
@@ -109,7 +109,7 @@ const deletePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const existPexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: idPExterno } });
     if (!existPexterno) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.DETALLE_PE_NOT_FOUND
         });
     }
     try {
