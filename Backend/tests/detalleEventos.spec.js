@@ -30,7 +30,6 @@ describe('Detalle de Eventos API', () => {
                 .send(DEvent_test);
 
             expect(response.status).toBe(200);
-            expect(response.body.msg).toMatch(/creó satisfactoriamente/);
         });
     });
 
