@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
-//singleton Pattern
+
 class Connection {
-    constructor() {
-    }
+    constructor() {}
+
     static getInstance() {
         if (!Connection.instance) {
             // Config DBConnection only once
@@ -17,6 +17,15 @@ class Connection {
         }
         return Connection.instance;
     }
+
+    static async close() {
+        if (Connection.instance) {
+            await Connection.instance.close();
+            Connection.instance = null;
+        }
+    }
 }
+
 Connection.instance = null;
 exports.default = Connection.getInstance();
+exports.Connection = Connection; // Exportar la clase Connection para poder llamar a close()

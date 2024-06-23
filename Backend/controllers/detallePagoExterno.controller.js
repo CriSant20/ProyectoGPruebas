@@ -50,7 +50,7 @@ const getPExternoById = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.getPExternoById = getPExternoById;
 
 const newPExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, detalle } = req.body;
+    const { id, detalle, estado } = req.body;
     const existPexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: id } });
     if (existPexterno) {
         return res.status(409).json({
@@ -60,7 +60,8 @@ const newPExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         yield Pexternos_models_1.DetallePagoExterno.create({
             id: id,
-            detalle: detalle
+            Detalle: detalle,
+            Estado: estado
         });
         res.json({
             msg: `El Detalle del pago externos ${id} se creó satisfactoriamente`
@@ -77,19 +78,20 @@ exports.newPExterno = newPExterno;
 
 const updatePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPExterno = req.params.id;
-    const { id, detalle } = req.body;
-    const existPexterno = yield Pexternos_models_1.PEvents.findOne({ where: { id: idPExterno } });
+    const { id, detalle, estado } = req.body;
+    const existPexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: idPExterno } });
     if (!existPexterno) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield Pexternos_models_1.PEvents.update({
-            id: id,
-            detalle: detalle
+        yield Pexternos_models_1.DetallePagoExterno.update({
+            id: idPExterno,
+            Detalle: detalle,
+            Estado: estado
         }, { where: { id: idPExterno } });
-        res.json({
+        res.status(200).json({
             msg: `El detalle del pago externo ${existPexterno.id} ha sido editado satisfactoriamente`
         });
     }
@@ -104,15 +106,15 @@ exports.updatePExterno = updatePExterno;
 
 const deletePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPExterno = req.params.id;
-    const existPexterno = yield Pexternos_models_1.PEvents.findOne({ where: { id: idPExterno } });
+    const existPexterno = yield Pexternos_models_1.DetallePagoExterno.findOne({ where: { id: idPExterno } });
     if (!existPexterno) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield Pexternos_models_1.PEvents.destroy({ where: { id: idPExterno } });
-        res.json({
+        yield Pexternos_models_1.DetallePagoExterno.destroy({ where: { id: idPExterno } });
+        res.status(200).json({
             msg: `El detalle del pago ${existPexterno.id} ha sido removido satisfactoriamente`
         });
     }
