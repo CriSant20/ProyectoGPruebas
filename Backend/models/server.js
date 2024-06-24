@@ -31,6 +31,7 @@ const eventos_routes_1 = __importDefault(require("../routes/events.routes"));
 const pagosEventos_routes_1 = __importDefault(require("../routes/pagosEventos.routes"));
 const pagosExternos_routes_1 = __importDefault(require("../routes/pagosExternos.routes"));
 const tareas_routes_1 = __importDefault(require("../routes/tareas.routes"));
+const cargos_controller_1 = __importDefault(require("../routes/cargos.routes"))
 
 // creation of tables
 const { User, Projects, Clubs, Students, Members, Cargos, DetalleClubs, DetalleEventos, DetallePagoEventos,DetallePagoExterno, DetalleProyectos, Eventos, PagosEventos, PagosExternos, Tareas} = require("./tblAssociation.models");
@@ -65,7 +66,7 @@ class Server {
         this.app.use('/api/PagoEventos', pagosEventos_routes_1.default);
         this.app.use('/api/PagoExternos', pagosExternos_routes_1.default);
         this.app.use('/api/tareas', tareas_routes_1.default);
-
+        this.app.use('/api/cargos', cargos_controller_1.default);
     }
     /*@middlewares: check http request from server,
     if body is in json convert data to js object*/

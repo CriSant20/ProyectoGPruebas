@@ -50,19 +50,20 @@ const getPExternoById = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.getPExternoById = getPExternoById;
 
 const newPExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, id_evento, fechaEvento, id_detalle_pago } = req.body;
-    const existPexterno = yield Pexternos_models_1.Pexterno.findOne({ where: { id: id } });
+    const { id, id_evento, fechaEvento, id_detalle_pago , Estado} = req.body;
+    const existPexterno = yield Pexternos_models_1.PagosExternos.findOne({ where: { id: id } });
     if (existPexterno) {
         return res.status(409).json({
             msg: manage_error_1.ErrorMessages.CLUB_EXIST
         });
     }
     try {
-        yield Pexternos_models_1.DetallePagoExterno.create({
+        yield Pexternos_models_1.PagosExternos.create({
             id: id,
             id_evento: id_evento,
             fechaEvento: fechaEvento,
-            id_detalle_pago: id_detalle_pago
+            id_detalle_pago: id_detalle_pago,
+            Estado: Estado
         });
         res.json({
             msg: `El pago externo ${id} se creó satisfactoriamente`
@@ -79,7 +80,7 @@ exports.newPExterno = newPExterno;
 
 const updatePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPExterno = req.params.id;
-    const { id, id_evento, fechaEvento, id_detalle_pago } = req.body;
+    const { id, id_evento, fechaEvento, id_detalle_pago, Estado } = req.body;
     const existPexterno = yield Pexternos_models_1.PagosExternos.findOne({ where: { id: idPExterno } });
     if (!existPexterno) {
         return res.status(404).json({
@@ -87,11 +88,12 @@ const updatePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
     }
     try {
-        yield Pexternos_models_1.PEvents.update({
+        yield Pexternos_models_1.PagosExternos.update({
             id: id,
             id_evento: id_evento,
             fechaEvento: fechaEvento,
-            id_detalle_pago: id_detalle_pago
+            id_detalle_pago: id_detalle_pago,
+            Estado: Estado
         }, { where: { id: idPExterno } });
         res.json({
             msg: `El pago externo ${existPexterno.id} ha sido editado satisfactoriamente`
@@ -115,7 +117,7 @@ const deletePExterno = (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
     }
     try {
-        yield Pexternos_models_1.PEvents.destroy({ where: { id: idPExterno } });
+        yield Pexternos_models_1.PagosExternos.destroy({ where: { id: idPExterno } });
         res.json({
             msg: `El pago ${existPexterno.id} ha sido removido satisfactoriamente`
         });

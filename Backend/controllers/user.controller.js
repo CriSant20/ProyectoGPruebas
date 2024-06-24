@@ -20,7 +20,7 @@ const manage_error_1 = require("../error/manage.error");
 const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     /*Destructuring req.body(similar to type req.body.userName), in my json i gonna received
     the params that i need ex. dniUser- nameUser*/
-    const { id, Nombre, Apellido, Edad, Organizacion, id_evento, Equipo, Pagos } = req.body;
+    const { id, Nombre, Apellido, Edad, Organizacion, id_evento, Equipo, Pagos, Estado } = req.body;
     //validate if user exist on the database
     const user = yield user_models_1.User.findOne({ where: { id: id } });
     if (user) {
@@ -40,10 +40,11 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             Organizacion: Organizacion,
             id_evento: id_evento,
             Equipo: Equipo,
-            Pagos: Pagos
+            Pagos: Pagos,
+            Estado: Estado
         });
         res.json({
-            msg: `Usuario ${nameUser} ${lastNameUser} ha sido creado satisfactoriamente!`
+            msg: `Usuario ${Nombre} ${Apellido} ha sido creado satisfactoriamente!`
         });
     }
     catch (error) {
@@ -55,7 +56,7 @@ const newUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.newUser = newUser;
 
-
+ 
 //LoginUser 
 const loginUser = async (req, res) => {
     try {
@@ -69,6 +70,7 @@ const loginUser = async (req, res) => {
             });
         }
 
+       
         // Validar la contraseña
         const passwordValidator = await bcrypt_1.default.compare(passwordUser, userExist.passwordUser);
         if (!passwordValidator) {
@@ -133,7 +135,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.deleteUser = deleteUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idUser = req.params.id;
-    const { id, Nombre, Apellido, Edad, Organizacion, id_evento, Equipo, Pagos } = req.body;
+    const { id, Nombre, Apellido, Edad, Organizacion, id_evento, Equipo, Pagos, Estado } = req.body;
     const existUser = yield user_models_1.User.findOne({ where: { id: idUser } });
     if (!existUser) {
         return res.status(404).json({
@@ -149,7 +151,8 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             Organizacion: Organizacion,
             id_evento: id_evento,
             Equipo: Equipo,
-            Pagos: Pagos
+            Pagos: Pagos,
+            Estado: Estado
         }, { where: { id: idUser } });
         res.json({
             msg: `El usuario ${existUser.Nombre} ha sido editado satisfactoriamente`

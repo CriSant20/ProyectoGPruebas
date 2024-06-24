@@ -11,7 +11,7 @@ const DEvent_test = {
 const event_test = {
     id: 1,
     NombreEvento: 'Evento de prueba',
-    id_tipo_Evento: 10, // Clave foránea que se referenciará al detalle del evento
+    id_tipo_Evento: 10, 
     Estado: true
 };
 
