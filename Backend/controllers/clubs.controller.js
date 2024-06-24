@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteClub = exports.updateClub = exports.newClub = exports.getClubById = exports.getClubs = void 0;
-const clubs_models_1 = require("../models/clubs.models");
+exports.deleteEventos = exports.updateEventos = exports.newEventos = exports.getEventoById = exports.getEventos = void 0;
+const eventos_models_1 = require("../models/events.models");
 const manage_error_1 = require("../error/manage.error");
 
-const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const clubsList = yield clubs_models_1.Clubs.findAll();
+        const eventosList = yield eventos_models_1.Events.findAll();
         res.json({
-            clubsList
+            eventosList
         });
     }
     catch (error) {
@@ -27,18 +27,18 @@ const getClubs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.getClubs = getClubs;
+exports.getEventos = getEventos;
 
-const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getEventoById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const idClub = req.params.id;
-        const club = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-        if (!club) {
+        const idEvento = req.params.id;
+        const evento = yield eventos_models_1.Events.findOne({ where: { id: idEvento } });
+        if (!evento) {
             return res.status(404).json({
-                msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
+                msg: manage_error_1.ErrorMessages.EVENTS_NOT_FOUND
             });
         }
-        res.json(club);
+        res.json(evento);
     }
     catch (error) {
         return res.status(500).json({
@@ -47,52 +47,60 @@ const getClubById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-exports.getClubById = getClubById;
+exports.getEventoById = getEventoById;
 
-const newClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { NombreClub: NombreClub } });
-    if (existClub) {
-        return res.status(409).json({
-            msg: manage_error_1.ErrorMessages.CLUB_EXIST
-        });
+const newEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, NombreEvento, id_tipo_Evento, Estado } = req.body;
+    // Check if id is provided
+    if (id) {
+        // Look for an existing event with the provided id
+        const existEventos = yield eventos_models_1.Events.findOne({ where: { id: id } });
+        if (existEventos) {
+            return res.status(409).json({
+                msg: manage_error_1.ErrorMessages.EVENTS_EXIST
+            });
+        }
     }
+
     try {
-        yield clubs_models_1.Clubs.create({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
+        // Create a new event (id will be auto-generated if not provided)
+        yield eventos_models_1.Events.create({
+            id: id, // Optionally include the id if it's provided
+            NombreEvento: NombreEvento,
+            id_tipo_Evento: id_tipo_Evento,
+            Estado: Estado
         });
         res.json({
-            msg: `El club ${NombreClub} se creó satisfactoriamente`
+            msg: `El evento ${NombreEvento} se creó satisfactoriamente`
         });
-    }
-    catch (error) {
+    } catch (error) {
         return res.status(500).json({
             msg: manage_error_1.ErrorMessages.SERVER_ERROR,
             error
         });
     }
 });
-exports.newClub = newClub;
 
-const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const { NombreClub, Encargado, id_detalle_club } = req.body;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+exports.newEventos = newEventos;
+
+const updateEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idEvento = req.params.id;
+    const { id, NombreEvento, id_tipo_Evento, Estado } = req.body;
+    const existEventos = yield eventos_models_1.Events.findOne({ where: { id: idEvento } });
+    if (!existEventos) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.EVENTS_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.update({
-            NombreClub: NombreClub,
-            Encargado: Encargado,
-            id_detalle_club: id_detalle_club
-        }, { where: { id: idClub } });
+        yield eventos_models_1.Events.update({
+            id: id,
+            NombreEvento: NombreEvento,
+            id_tipo_Evento: id_tipo_Evento,
+            Estado: Estado
+        }, { where: { id: idEvento } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido editado satisfactoriamente`
+            msg: `El evento ${existEventos.NombreEvento} ha sido editado satisfactoriamente`
         });
     }
     catch (error) {
@@ -102,20 +110,20 @@ const updateClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.updateClub = updateClub;
+exports.updateEventos = updateEventos;
 
-const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idClub = req.params.id;
-    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idClub } });
-    if (!existClub) {
+const deleteEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idEventos = req.params.id;
+    const existEventos = yield eventos_models_1.Events.findOne({ where: { id: idEventos } });
+    if (!existEventos) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.EVENTS_NOT_FOUND
         });
     }
     try {
-        yield clubs_models_1.Clubs.destroy({ where: { id: idClub } });
+        yield eventos_models_1.Events.destroy({ where: { id: idEventos } });
         res.json({
-            msg: `El club ${existClub.NombreClub} ha sido removido satisfactoriamente`
+            msg: `El evento ${existEventos.NombreEvento} ha sido removido satisfactoriamente`
         });
     }
     catch (error) {
@@ -125,4 +133,4 @@ const deleteClub = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
 });
-exports.deleteClub = deleteClub;
+exports.deleteEventos = deleteEventos;

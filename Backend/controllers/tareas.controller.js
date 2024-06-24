@@ -50,7 +50,7 @@ const getTareaById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getTareaById = getTareaById;
 
 const newTareas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, Nombre, id_estudiante, id_club, descripcionTarea, Estado } = req.body;
+    const { id, Nombre, id_estudiante, id_club, descripcionTarea } = req.body;
     const existTarea = yield tareas_models_1.Tareas.findOne({ where: { id: id } });
     if (existTarea) {
         return res.status(409).json({
@@ -63,8 +63,7 @@ const newTareas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             Nombre: Nombre,
             id_estudiante: id_estudiante,
             id_club: id_club,
-            descripcionTarea: descripcionTarea,
-            Estado: Estado
+            descripcionTarea: descripcionTarea
         });
         res.json({
             msg: `La tarea ${Nombre} se creó satisfactoriamente`
@@ -81,8 +80,8 @@ exports.newTareas = newTareas;
 
 const updateTareas = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idTarea = req.params.id;
-    const { id, Nombre, id_estudiante, id_club, descripcionTarea, Estado } = req.body;
-    const existClub = yield tareas_models_1.Tareas.findOne({ where: { id: idTarea } });
+    const { id, Nombre, id_estudiante, id_club, descripcionTarea } = req.body;
+    const existClub = yield clubs_models_1.Clubs.findOne({ where: { id: idTarea } });
     if (!existTarea) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
@@ -94,8 +93,7 @@ const updateTareas = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             Nombre: Nombre,
             id_estudiante: id_estudiante,
             id_club: id_club,
-            descripcionTarea: descripcionTarea,
-            Estado: Estado
+            descripcionTarea: descripcionTarea
         }, { where: { id: idTarea } });
         res.json({
             msg: `La tarea ${existTarea.Nombre} ha sido editado satisfactoriamente`

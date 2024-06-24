@@ -66,7 +66,6 @@ const newStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             Carrera: Carrera,
             Semestre: Semestre,
             id_Cargo: id_Cargo,
-            Estado: Estado,
             Cedula: Cedula,
             Correo: Correo,
             Contrasena, Contrasena
@@ -102,7 +101,6 @@ const updateStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             Carrera: Carrera,
             Semestre: Semestre,
             id_Cargo: id_Cargo,
-            Estado: Estado,
             Cedula: Cedula,
             Correo: Correo,
             Contrasena, Contrasena

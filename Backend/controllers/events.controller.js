@@ -35,7 +35,7 @@ const getEventoById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const evento = yield eventos_models_1.Events.findOne({ where: { id: idEvento } });
         if (!evento) {
             return res.status(404).json({
-                msg: manage_error_1.ErrorMessages.EVENTS_NOT_FOUND
+                msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
             });
         }
         res.json(evento);
@@ -50,19 +50,18 @@ const getEventoById = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.getEventoById = getEventoById;
 
 const newEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, NombreEvento, id_tipo_Evento, Estado } = req.body;
+    const { id, NombreEvento, id_tipo_evento } = req.body;
     const existEventos = yield eventos_models_1.Events.findOne({ where: { id: id } });
     if (existEventos) {
         return res.status(409).json({
-            msg: manage_error_1.ErrorMessages.EVENTS_EXIST
+            msg: manage_error_1.ErrorMessages.CLUB_EXIST
         });
     }
     try {
         yield eventos_models_1.Events.create({
             id: id,
             NombreEvento: NombreEvento,
-            id_tipo_Evento: id_tipo_Evento,
-            Estado: Estado
+            id_tipo_evento, id_tipo_evento
         });
         res.json({
             msg: `El evento ${NombreEvento} se creó satisfactoriamente`
@@ -79,19 +78,18 @@ exports.newEventos = newEventos;
 
 const updateEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idEvento = req.params.id;
-    const { id, NombreEvento, id_tipo_Evento, Estado } = req.body;
+    const { id, NombreEvento, id_tipo_evento } = req.body;
     const existEventos = yield eventos_models_1.Events.findOne({ where: { id: idEvento } });
     if (!existEventos) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.EVENTS_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
         yield eventos_models_1.Events.update({
             id: id,
             NombreEvento: NombreEvento,
-            id_tipo_Evento: id_tipo_Evento,
-            Estado: Estado
+            id_tipo_evento: id_tipo_evento
         }, { where: { id: idEvento } });
         res.json({
             msg: `El evento ${existEventos.NombreEvento} ha sido editado satisfactoriamente`
@@ -111,7 +109,7 @@ const deleteEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const existEventos = yield eventos_models_1.Events.findOne({ where: { id: idEventos } });
     if (!existEventos) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.EVENTS_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {

@@ -35,7 +35,7 @@ const getDEventoById = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const Devento = yield Deventos_models_1.DEvents.findOne({ where: { id: idDEvento } });
         if (!Devento) {
             return res.status(404).json({
-                msg: manage_error_1.ErrorMessages.DEVENTS_NOT_FOUND
+                msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
             });
         }
         res.json(Devento);
@@ -54,7 +54,7 @@ const newDEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const existDEventos = yield Deventos_models_1.DEvents.findOne({ where: { id: id } });
     if (existDEventos) {
         return res.status(409).json({
-            msg: manage_error_1.ErrorMessages.DEVENTS_EXIST
+            msg: manage_error_1.ErrorMessages.CLUB_EXIST
         });
     }
     try {
@@ -81,7 +81,7 @@ const updateDEventos = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const existDEventos = yield Deventos_models_1.DEvents.findOne({ where: { id: idDEvento } });
     if (!existDEventos) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.DEVENTS_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
@@ -104,10 +104,10 @@ exports.updateDEventos = updateDEventos;
 
 const deleteDEventos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idDEventos = req.params.id;
-    const existDEventos = yield Deventos_models_1.DEvents.findOne({ where: { id: idDEventos } });
+    const existDEventos = yield Deventos_models_1.DClubs.findOne({ where: { id: idDEventos } });
     if (!existDEventos) {
         return res.status(404).json({
-            msg: manage_error_1.ErrorMessages.DEVENTS_NOT_FOUND
+            msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {

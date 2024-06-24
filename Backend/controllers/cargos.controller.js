@@ -50,7 +50,7 @@ const getCargoById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getCargoById = getCargoById;
 
 const newCargos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, Nombre, seccionCargo, Estado } = req.body;
+    const { Nombre, seccionCargo, Estado } = req.body;
     const existCargo = yield cargo_models_1.Cargos.findOne({ where: { Nombre: Nombre } });
     if (existCargo) {
         return res.status(409).json({
@@ -59,7 +59,6 @@ const newCargos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     try {
         yield cargo_models_1.Cargos.create({
-            id: id,
             Nombre: Nombre,
             seccionCargo: seccionCargo,
             Estado:Estado
@@ -78,9 +77,9 @@ const newCargos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.newCargos = newCargos;
 
 const updateCargo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idCargo = req.params.id;
-    const { id, Nombre, seccionCargo, Estado } = req.body;
-    const existCargo = yield cargo_models_1.Cargos.findOne({ where: { id: idCargo } });
+    const id = req.params.id;
+    const { Nombre, seccionCargo, Estado } = req.body;
+    const existCargo = yield cargo_models_1.Cargos.findOne({ where: { id: id } });
     if (!existCargo) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
@@ -88,7 +87,6 @@ const updateCargo = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     try {
         yield cargo_models_1.Cargos.update({
-            id: id,
             Nombre: Nombre,
             seccionCargo: seccionCargo,
             Estado:Estado
@@ -108,14 +106,14 @@ exports.updateCargo = updateCargo;
 
 const deleteCargos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const existCargo = yield cargo_models_1.Cargos.findOne({ where: { id: id } });
+    const existCargo = yield cargo_models_1.Clubs.findOne({ where: { id: id } });
     if (!existCargo) {
         return res.status(404).json({
             msg: manage_error_1.ErrorMessages.CLUB_NOT_FOUND
         });
     }
     try {
-        yield cargo_models_1.Cargos.destroy({ where: { id: id } });
+        yield cargo_models_1.Clubs.destroy({ where: { id: id } });
         res.json({
             msg: `El cargo ${existCargo.Nombre} ha sido removido satisfactoriamente`
         });
